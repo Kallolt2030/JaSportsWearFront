@@ -1,78 +1,24 @@
-<section class="container my-5">
+<section class="cta text-center text-white mt-5 py-5">
 
-  <h2 data-aos="fade-down" class="text-center mb-4 display-5 fw-bold text-dark">
-    ¿Tienes dudas o quieres más info?
-  </h2>
-  <p data-aos="fade-up" class="text-center text-muted mb-5">
-    Envíanos un mensaje y te responderemos lo antes posible.
-  </p>
+    <div class="container">
 
-<!-- Tu formulario (sin cambios grandes, solo quitamos "action") -->
-<!-- Iframe oculto para capturar la respuesta de FormSubmit sin redirección -->
-<iframe name="dummyFrame" style="display: none;"></iframe>
+      <h2 class="mb-3">
+        ¿Listo para mejorar tu entrenamiento?
+      </h2>
 
-<form id="contacto-form"
-      action="https://formsubmit.co/ktbernalgallegos@gmail.com"
-      method="POST"
-      target="dummyFrame"
-      class="mx-auto shadow-lg p-4 rounded-4 bg-white"
-      style="max-width: 600px;">
+      <p class="mb-4">
+        Contáctanos y consigue el mejor equipo deportivo.
+      </p>
 
-  <!-- Campos -->
-  <div class="form-floating mb-4">
-    <input type="text" class="form-control form-control-lg rounded-3" name="nombre"
-           placeholder="Tu nombre completo" required>
-    <label>Nombre completo</label>
-  </div>
+      <a href="https://wa.me/5210000000000"
+         target="_blank"
+         class="btn btn-success btn-lg">
 
-  <div class="form-floating mb-4">
-    <input type="email" class="form-control form-control-lg rounded-3" name="email"
-           placeholder="correo@ejemplo.com" required>
-    <label>Correo electrónico</label>
-  </div>
+        <i class="bi bi-whatsapp me-2"></i>
+        Contactar por WhatsApp
 
-  <div class="form-floating mb-4">
-    <textarea class="form-control form-control-lg rounded-3" name="mensaje"
-              placeholder="Escribe tu mensaje aquí..." style="height: 150px;" required></textarea>
-    <label>¿En qué podemos ayudarte?</label>
-  </div>
+      </a>
 
-  <!-- Ocultos -->
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_template" value="table">
-
-  <div class="text-center">
-    <button type="submit" class="btn btn-danger btn-lg px-5 py-2 shadow-sm">Enviar mensaje</button>
-  </div>
-</form>
-
-<!-- Modal Bootstrap -->
-<div class="modal fade" id="exitoModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center">
-      <div class="modal-header bg-success text-white">
-        <h5 class="modal-title">¡Mensaje Enviado!</h5>
-      </div>
-      <div class="modal-body">
-        <p>Gracias por contactarnos. Te responderemos pronto. 😊</p>
-      </div>
     </div>
-  </div>
-</div>
 
-
-<!-- MODAL de éxito -->
-<div class="modal fade" id="exitoModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center">
-      <div class="modal-header bg-success text-white">
-        <h5 class="modal-title">¡Mensaje Enviado!</h5>
-      </div>
-      <div class="modal-body">
-        <p>Gracias por contactarnos. Te responderemos pronto. 😊</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-</section>
+  </section>

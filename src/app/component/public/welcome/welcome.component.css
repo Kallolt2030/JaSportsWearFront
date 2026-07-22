@@ -1,39 +1,11 @@
-.carousel-item {
-  background-color: #1A1A1A;
-  position: relative;
-  height: 100vh; /* Por defecto, pantalla completa */
-}
+section {
+  background:
+  linear-gradient(rgba(13,15,20,.85), rgba(13,15,20,.95)),
+  url('/imgs/gym-banner.jpg');
 
-.carousel-image {
-  position: absolute;
-  top: 55%; /* en lugar de 50% */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.carousel-image {
-  transition: transform 0.5s ease;
-}
-
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
-}
-
-.carousel-control-prev-icon:hover,
-.carousel-control-next-icon:hover {
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-/* Reset de márgenes/padding para layout limpio */
-.container-fluid, .row, .col-12 {
-  padding: 0;
-  margin: 0;
+  background-size: cover;
+  background-position: center;
+  min-height: 65vh;
 }
 
 /* 📱 Media query para pantallas medianas (<=1080px) */

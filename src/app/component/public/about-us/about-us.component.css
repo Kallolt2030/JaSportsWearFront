@@ -1,39 +1,74 @@
-/* Estilos generales */
+/* CONTENEDOR */
 .bg-custom {
-  background-color: #D60018;
+  background: #1F242B;
   color: white;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all .3s ease;
 }
 
-/* Estilo para el botón personalizado */
-.btn-custom {
-  background-color: white;
-  color: #D60018;
-  padding: 12px 30px;
-  font-weight: 600;
-  border-radius: 30px;
-  border: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.bg-custom:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .6);
+  border-color: #2F80ED;
 }
+
+/* TÍTULO */
 .text-container h2 {
   padding-block: 2%;
+  font-weight: 700;
+}
+
+/* DIVISOR */
+.text-container h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  margin: 15px auto 0;
+  background: linear-gradient(90deg, #F2C94C, #2F80ED);
+  border-radius: 3px;
+}
+
+/* TEXTO */
+.text-container p {
+  color: rgba(255,255,255,.9);
+  line-height: 1.8;
+}
+
+/* BOTÓN */
+.btn-custom {
+  background: linear-gradient(90deg, #F2C94C, #2F80ED);
+  color: white;
+  padding: 12px 30px;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  transition: all .3s ease;
 }
 
 .btn-custom:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  background-color: #f8f9fa;
+  box-shadow: 0 6px 18px rgba(47, 128, 237, .35);
+  color: white;
 }
 
-/* Imagen */
+/* IMAGEN */
 .image-side img {
   max-width: 100%;
   height: auto;
-  border-radius: 10px;
+  border-radius: 12px;
+  transition: all .3s ease;
+}
+
+.image-side img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
 }
 
 /* RESPONSIVE */
 @media (max-width: 767px) {
+
   .custom-section {
     height: auto !important;
     padding: 20px 10px;
@@ -42,30 +77,32 @@
   .row {
     flex-direction: column-reverse;
   }
+
   .bg-custom {
-    background-color: transparent; /* quita el rojo de la columna */
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
 
-  /* Fondo rojo y redondeado solo en móvil */
   .text-container {
-    background-color: #D60018;
+    background: #1F242B;
     color: white;
     border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.05);
     padding: 20px;
     margin: 10px auto;
     width: 100% !important;
   }
 
   .text-container h2 {
-  font-size: 1.6rem;
-  margin: 1rem 0;
-  padding: 0.5rem 0;
-  line-height: 1.3;
-}
+    font-size: 1.6rem;
+    margin: 1rem 0;
+    line-height: 1.3;
+  }
 
-.text-container h2.fs-1 {
-  font-size: 1.6rem !important; /* sobrescribe el fs-1 de Bootstrap */
-}
+  .text-container h2.fs-1 {
+    font-size: 1.6rem !important;
+  }
 
   .text-container p {
     font-size: 1rem;
@@ -75,7 +112,7 @@
 
   .btn-custom {
     padding: 10px 25px;
-    font-size: 0.9rem;
+    font-size: .9rem;
   }
 
   .image-side {
