@@ -1,72 +1,429 @@
-/* Quitar márgenes/paddings generales */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Fondo con imagen oscurecida */
-.section-background {
+/* ===== SECCIÓN ESTADÍSTICAS ===== */
+.stats-section {
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
   background-image: url('/imgs/banner hombre gym.jpg');
   background-size: cover;
   background-position: center;
-  min-height: 95vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-attachment: fixed;
   overflow: hidden;
 }
 
-/* Capa oscura encima de la imagen */
-.section-background::before {
-  content: "";
+/* Capa de superposición mejorada */
+.stats-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background: linear-gradient(135deg, 
+    rgba(10, 14, 23, 0.92) 0%,
+    rgba(26, 35, 50, 0.85) 50%,
+    rgba(10, 14, 23, 0.92) 100%
+  );
   z-index: 1;
 }
 
-/* Contenedor encima del fondo */
-.section-background .container {
+/* Patrón de fondo sutil */
+.stats-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(47, 128, 237, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(242, 201, 76, 0.05) 0%, transparent 50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.stats-container {
   position: relative;
   z-index: 2;
-  padding: 2rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
 }
 
-/* Iconos con efecto suave */
-.icon-hover {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+/* ===== HEADER ===== */
+.stats-header {
+  text-align: center;
+  margin-bottom: 60px;
 }
 
-.icon-hover:hover {
-  transform: scale(1.1);
-  opacity: 0.7;
+.stats-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(242, 201, 76, 0.15), rgba(47, 128, 237, 0.15));
+  color: #F2C94C;
+  padding: 8px 24px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border: 1px solid rgba(242, 201, 76, 0.2);
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
 }
 
-/* Título principal */
-.section-title {
+.stats-title {
+  font-size: 3.5rem;
+  font-weight: 800;
   color: white;
-  font-size: 3.2rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin: 0 0 15px 0;
+  line-height: 1.1;
 }
 
-/* Ajustes en pantallas pequeñas */
-@media (max-width: 767px) {
-  .section-title {
-    font-size: 2rem;
-    margin-top: 1rem;
-  }
+.stats-title .gradient-text {
+  background: linear-gradient(135deg, #F2C94C, #2F80ED);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-  .section-background .row {
-    gap: 2rem !important;
-  }
+.stats-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
 
-  .section-background .item {
-    font-size: 1rem !important;
+/* ===== GRID DE TARJETAS ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+/* ===== TARJETA INDIVIDUAL ===== */
+.stats-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  padding: 40px 30px;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(47, 128, 237, 0.05) 0%,
+    rgba(242, 201, 76, 0.05) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(47, 128, 237, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.stats-card:hover::before {
+  opacity: 1;
+}
+
+/* Borde de acento en hover */
+.stats-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #F2C94C, #2F80ED);
+  transition: width 0.4s ease;
+  border-radius: 3px;
+}
+
+.stats-card:hover::after {
+  width: 80%;
+}
+
+/* ===== ICONO ===== */
+.stats-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.stats-icon-bg {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, 
+    rgba(47, 128, 237, 0.1), 
+    rgba(242, 201, 76, 0.1)
+  );
+  border-radius: 20px;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stats-card:hover .stats-icon-bg {
+  transform: scale(1.05) rotate(-5deg);
+  background: linear-gradient(135deg, 
+    rgba(47, 128, 237, 0.2), 
+    rgba(242, 201, 76, 0.2)
+  );
+}
+
+.stats-icon {
+  width: 45px;
+  height: 45px;
+  filter: brightness(0) invert(1) opacity(0.8);
+  transition: all 0.4s ease;
+}
+
+.stats-card:hover .stats-icon {
+  filter: brightness(0) invert(0) brightness(100%);
+  filter: none;
+  opacity: 1;
+}
+
+/* ===== NÚMERO ===== */
+.stats-number {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.counter {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  background: linear-gradient(135deg, #ffffff, #a8a8a8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stats-plus {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #F2C94C;
+}
+
+/* ===== ETIQUETA ===== */
+.stats-label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 8px 0;
+}
+
+.stats-description {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 20px 0;
+}
+
+/* ===== BARRA DE PROGRESO ===== */
+.stats-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #F2C94C, #2F80ED);
+  border-radius: 4px;
+  transition: width 1.5s ease;
+  position: relative;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ===== CTA ===== */
+.stats-cta {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.stats-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #F2C94C, #2F80ED);
+  color: white;
+  padding: 16px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(47, 128, 237, 0.3);
+}
+
+.stats-btn i {
+  transition: transform 0.3s ease;
+}
+
+.stats-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 35px rgba(47, 128, 237, 0.4);
+  color: white;
+}
+
+.stats-btn:hover i {
+  transform: translateX(5px);
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablet */
+@media (max-width: 992px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+  
+  .stats-title {
+    font-size: 2.8rem;
+  }
+  
+  .counter {
+    font-size: 2.8rem;
+  }
+}
+
+/* Móvil Grande */
+@media (max-width: 768px) {
+  .stats-section {
+    padding: 60px 15px;
+    background-attachment: scroll;
+    min-height: auto;
+  }
+  
+  .stats-title {
+    font-size: 2.2rem;
+  }
+  
+  .stats-subtitle {
+    font-size: 1rem;
+    padding: 0 15px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 400px;
+    margin: 0 auto 40px;
+  }
+  
+  .stats-card {
+    padding: 30px 20px;
+  }
+  
+  .counter {
+    font-size: 2.5rem;
+  }
+  
+  .stats-plus {
+    font-size: 1.5rem;
+  }
+  
+  .stats-badge {
+    font-size: 0.8rem;
+    padding: 6px 18px;
+  }
+  
+  .stats-btn {
+    padding: 14px 30px;
+    font-size: 0.95rem;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Móvil Pequeño */
+@media (max-width: 480px) {
+  .stats-title {
+    font-size: 1.8rem;
+  }
+  
+  .stats-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .stats-card {
+    padding: 25px 15px;
+    border-radius: 18px;
+  }
+  
+  .stats-icon-bg {
+    width: 65px;
+    height: 65px;
+  }
+  
+  .stats-icon {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .counter {
+    font-size: 2.2rem;
+  }
+  
+  .stats-label {
+    font-size: 1rem;
+  }
+  
+  .stats-description {
+    font-size: 0.8rem;
+  }
+  
+  .stats-btn {
+    padding: 12px 25px;
+    font-size: 0.9rem;
+  }
+  
+  .stats-cta {
+    margin-top: 10px;
   }
 }

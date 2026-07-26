@@ -1,32 +1,204 @@
-<section class="p-4 mt-5">
-    <div class="row mt-5">
-        <div class="col-md-3"></div>
-            <div class="col-md-6 border-radius-3 login p-3 shadow rounded">
-              <form (submit)="login(); $event.preventDefault()">
-                <div class="row">
-                <div class="col-2"></div>
-                <div class="col-8">
-                <div class="text-center">
-                  <img src="imgs/sportsWear.png" width="150" height="150" alt="">
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label text-white">Email:</label>
-                    <div class="input-group">
-                        <input type="email" id="email" [(ngModel)]="email" name="email" class="form-control">
+<section class="auth-section">
+    <div class="container h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-lg-6 col-md-8 col-11">
+                <div class="login-card p-4 p-md-5 shadow-lg rounded-4">
+                    
+                    <!-- Mensajes de éxito/error -->
+                    <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        {{ successMessage }}
+                        <button type="button" class="btn-close" (click)="successMessage = null" aria-label="Close"></button>
+                    </div>
+                    <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        {{ errorMessage }}
+                        <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
+                    </div>
+
+                    <!-- FORMULARIO DE REGISTRO -->
+                    <form *ngIf="isRegister" (ngSubmit)="register(); $event.preventDefault()" #registerForm="ngForm">
+                        <!-- LOGO Y TÍTULO -->
+                        <div class="text-center mb-4">
+                            <div class="logo-container">
+                                <img src="imgs/sportsWear.png" alt="SportsWear Logo" class="logo-img">
+                            </div>
+                            <h2 class="brand-title">JASPORTWEAR</h2>
+                            <p class="brand-subtitle">Ropa deportiva de calidad</p>
+                        </div>
+                        
+                        <h3 class="text-center text-white mb-4">Crear Cuenta</h3>
+                        
+                        <!-- Campo: Nombre completo -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label text-white">
+                                <i class="bi bi-person-fill me-1"></i>Nombre completo:
+                            </label>
+                            <input type="text" 
+                                   id="name" 
+                                   [(ngModel)]="newUser.name" 
+                                   name="name" 
+                                   class="form-control" 
+                                   placeholder="Juan Pérez" 
+                                   [class.is-invalid]="!newUser.name && registerForm.submitted"
+                                   required
+                                   minlength="2"
+                                   maxlength="100">
+                            <div class="invalid-feedback" *ngIf="!newUser.name && registerForm.submitted">
+                                El nombre es obligatorio
+                            </div>
+                        </div>
+
+                        <!-- Campo: Email -->
+                        <div class="mb-3">
+                            <label for="emailReg" class="form-label text-white">
+                                <i class="bi bi-envelope-fill me-1"></i>Email:
+                            </label>
+                            <input type="email" 
+                                   id="emailReg" 
+                                   [(ngModel)]="newUser.email" 
+                                   name="emailReg" 
+                                   class="form-control" 
+                                   placeholder="correo@ejemplo.com" 
+                                   [class.is-invalid]="!newUser.email && registerForm.submitted"
+                                   required
+                                   email>
+                            <div class="invalid-feedback" *ngIf="!newUser.email && registerForm.submitted">
+                                El email es obligatorio
+                            </div>
+                        </div>
+
+                        <!-- Campo: Contraseña -->
+                        <div class="mb-3">
+                            <label for="passwordReg" class="form-label text-white">
+                                <i class="bi bi-lock-fill me-1"></i>Contraseña (mínimo 8 caracteres):
+                            </label>
+                            <input type="password" 
+                                   id="passwordReg" 
+                                   minlength="8" 
+                                   maxlength="50"
+                                   [(ngModel)]="newUser.password" 
+                                   name="passwordReg" 
+                                   class="form-control" 
+                                   placeholder="********" 
+                                   [class.is-invalid]="(newUser.password.length < 8 && newUser.password.length > 0) || (!newUser.password && registerForm.submitted)"
+                                   required>
+                            <div class="invalid-feedback" *ngIf="newUser.password.length < 8 && newUser.password.length > 0">
+                                La contraseña debe tener al menos 8 caracteres
+                            </div>
+                            <div class="invalid-feedback" *ngIf="!newUser.password && registerForm.submitted">
+                                La contraseña es obligatoria
+                            </div>
+                            <small class="text-light opacity-75">
+                                <i class="bi bi-info-circle"></i> Mínimo 8 caracteres
+                            </small>
+                        </div>
+
+                        <!-- Campo: Confirmar contraseña -->
+                        <div class="mb-4">
+                            <label for="confirmPassword" class="form-label text-white">
+                                <i class="bi bi-check-circle-fill me-1"></i>Confirmar Contraseña:
+                            </label>
+                            <input type="password" 
+                                   id="confirmPassword" 
+                                   minlength="8" 
+                                   maxlength="50"
+                                   [(ngModel)]="newUser.confirmPassword" 
+                                   name="confirmPassword" 
+                                   class="form-control" 
+                                   placeholder="********" 
+                                   [class.is-invalid]="newUser.confirmPassword && newUser.password !== newUser.confirmPassword"
+                                   required>
+                            <div class="invalid-feedback" *ngIf="newUser.confirmPassword && newUser.password !== newUser.confirmPassword">
+                                Las contraseñas no coinciden
+                            </div>
+                        </div>
+
+                        <!-- Botón de registro -->
+                        <button type="submit" 
+                                class="btn btn-outline-light w-100 py-2 mb-3" 
+                                [disabled]="isLoading || registerForm.invalid || newUser.password !== newUser.confirmPassword">
+                            <span *ngIf="!isLoading">
+                                <i class="bi bi-person-plus-fill me-2"></i>Registrarse
+                            </span>
+                            <span *ngIf="isLoading">
+                                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                Registrando...
+                            </span>
+                        </button>
+                    </form>
+
+                    <!-- FORMULARIO DE LOGIN -->
+                    <form *ngIf="!isRegister" (submit)="login(); $event.preventDefault()" #loginForm="ngForm">
+                        <!-- LOGO Y TÍTULO -->
+                        <div class="text-center mb-4">
+                            <div class="logo-container">
+                                <img src="imgs/sportsWear.png" alt="SportsWear Logo" class="logo-img">
+                            </div>
+                            <h2 class="brand-title">JASPORTWEAR</h2>
+                            <p class="brand-subtitle">Ropa deportiva de calidad</p>
+                        </div>
+                        
+                        <h3 class="text-center text-white mb-4">Iniciar Sesión</h3>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label text-white">
+                                <i class="bi bi-envelope-fill me-1"></i>Email:
+                            </label>
+                            <input type="email" 
+                                   id="email" 
+                                   [(ngModel)]="email" 
+                                   name="email" 
+                                   class="form-control" 
+                                   placeholder="correo@ejemplo.com"
+                                   required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="password" class="form-label text-white">
+                                <i class="bi bi-lock-fill me-1"></i>Contraseña:
+                            </label>
+                            <input type="password" 
+                                   id="password" 
+                                   [(ngModel)]="password" 
+                                   name="password" 
+                                   class="form-control" 
+                                   placeholder="********"
+                                   required>
+                        </div>
+                        
+                        <button type="submit" 
+                                class="btn btn-outline-light w-100 py-2 mb-3" 
+                                [disabled]="isLoading">
+                            <span *ngIf="!isLoading">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar sesión
+                            </span>
+                            <span *ngIf="isLoading">
+                                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                Iniciando sesión...
+                            </span>
+                        </button>
+                        
+                        <!-- Enlace para recuperar contraseña -->
+                        <div class="text-center">
+                            <a href="#" class="text-light opacity-75 text-decoration-none" style="font-size: 0.9rem;">
+                                <i class="bi bi-question-circle"></i> ¿Olvidaste tu contraseña?
+                            </a>
+                        </div>
+                    </form>
+
+                    <!-- Enlace para alternar entre login y registro -->
+                    <div class="text-center mt-4 pt-3 border-top border-light border-opacity-10">
+                        <a href="javascript:void(0)" 
+                           class="text-white text-decoration-none" 
+                           (click)="toggleForm()"
+                           style="font-size: 1rem; opacity: 0.8;">
+                            <i class="bi" [class.bi-arrow-left-circle]="isRegister" [class.bi-person-plus]="!isRegister"></i>
+                            {{ isRegister ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Regístrate' }}
+                        </a>
                     </div>
                 </div>
-                <div class="mb-5">
-                    <label for="password" class="form-label text-white">Contraseña:</label>
-                    <input type="password" id="password" [(ngModel)]="password" name="password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-outline-light mb-5">Iniciar sesion</button>
-                </div>
-                </div>
-                <div class="col-2"></div>
-
-                </form>
-
             </div>
-        <div class="col-md-3"></div>
+        </div>
     </div>
 </section>

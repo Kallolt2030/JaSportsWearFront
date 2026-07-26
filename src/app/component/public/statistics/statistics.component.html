@@ -1,63 +1,90 @@
-<section class="section-background">
-  <div class="container text-center text-white">
-    <h2 data-aos="fade-down" class="section-title">Estadísticas</h2>
+<!-- SECCIÓN ESTADÍSTICAS REDISEÑADA -->
+<section class="stats-section">
+  <div class="stats-overlay"></div>
+  
+  <div class="stats-container">
+    <div class="stats-header" data-aos="fade-down">
+      <h2 class="stats-title">
+        Nuestros <span class="gradient-text">Resultados</span>
+      </h2>
+      <p class="stats-subtitle">
+        Números que respaldan nuestro compromiso con la calidad y excelencia
+      </p>
+    </div>
 
-    <div class="row justify-content-center g-5">
-
-      <!-- Productos -->
-      <div class="col-md-4">
-        <div class="item">
-          <img
-            data-aos="fade-down"
-            src="imgs/shopping-bag-svgrepo-com.svg"
-            alt="productos"
-            class="icon-hover"
-            width="90"
-            height="90">
-
-          <p data-aos="fade-up">
-            <strong>+3,500</strong><br>
-            Productos deportivos vendidos
-          </p>
+    <div class="stats-grid">
+      
+      <!-- Estadística 1: Productos -->
+      <div class="stats-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="stats-icon-wrapper">
+          <div class="stats-icon-bg">
+            <img 
+              src="imgs/shopping-bag-svgrepo-com.svg" 
+              alt="Productos" 
+              class="stats-icon">
+          </div>
+        </div>
+        <div class="stats-number">
+          <span class="counter">3,500</span>
+          <span class="stats-plus">+</span>
+        </div>
+        <h3 class="stats-label">Productos Vendidos</h3>
+        <p class="stats-description">Artículos deportivos de alta calidad</p>
+        <div class="stats-progress">
+          <div class="progress-bar" style="width: 85%"></div>
         </div>
       </div>
 
-      <!-- Categorías -->
-      <div class="col-md-4">
-        <div class="item">
-          <img
-            data-aos="fade-down"
-            src="imgs/sport-svgrepo-com.svg"
-            alt="categorias"
-            class="icon-hover"
-            width="90"
-            height="90">
-
-          <p data-aos="fade-up">
-            <strong>2</strong><br>
-            Categorías disponibles
-          </p>
+      <!-- Estadística 2: Categorías -->
+      <div class="stats-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="stats-icon-wrapper">
+          <div class="stats-icon-bg">
+            <img 
+              src="imgs/sport-svgrepo-com.svg" 
+              alt="Categorías" 
+              class="stats-icon">
+          </div>
+        </div>
+        <div class="stats-number">
+          <span class="counter">2</span>
+          <span class="stats-plus">+</span>
+        </div>
+        <h3 class="stats-label">Categorías</h3>
+        <p class="stats-description">Ropa y accesorios deportivos</p>
+        <div class="stats-progress">
+          <div class="progress-bar" style="width: 100%"></div>
         </div>
       </div>
 
-      <!-- Clientes -->
-      <div class="col-md-4">
-        <div class="item">
-          <img
-            data-aos="fade-down"
-            src="imgs/user-plus-svgrepo-com.svg"
-            alt="clientes"
-            class="icon-hover"
-            width="90"
-            height="90">
-
-          <p data-aos="fade-up">
-            <strong>+1,200</strong><br>
-            Clientes satisfechos
-          </p>
+      <!-- Estadística 3: Clientes -->
+      <div class="stats-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="stats-icon-wrapper">
+          <div class="stats-icon-bg">
+            <img 
+              src="imgs/user-plus-svgrepo-com.svg" 
+              alt="Clientes" 
+              class="stats-icon">
+          </div>
+        </div>
+        <div class="stats-number">
+          <span class="counter">1,200</span>
+          <span class="stats-plus">+</span>
+        </div>
+        <h3 class="stats-label">Clientes Satisfechos</h3>
+        <p class="stats-description">Confían en nuestra calidad</p>
+        <div class="stats-progress">
+          <div class="progress-bar" style="width: 95%"></div>
         </div>
       </div>
 
+    </div>
+
+    <!-- Llamada a la acción -->
+    <div class="stats-cta" data-aos="fade-up" data-aos-delay="400">
+      <a href="/catalog" class="stats-btn">
+        <i class="bi bi-arrow-right"></i>
+        Únete a nuestra comunidad
+      </a>
     </div>
   </div>
 </section>
