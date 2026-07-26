@@ -30,7 +30,8 @@ export class LoginComponent {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'user' // Valor por defecto para el rol
   };
 
   constructor(
@@ -93,93 +94,83 @@ export class LoginComponent {
     });
   }
 
-  /**
-   * Método para registrar un nuevo usuario
-   */
   register() {
-    // Limpiar mensajes previos
-    this.errorMessage = null;
-    this.successMessage = null;
+  // Limpiar mensajes previos
+  this.errorMessage = null;
+  this.successMessage = null;
 
-    // Validar que todos los campos estén completos
-    if (!this.newUser.name || !this.newUser.email || !this.newUser.password || !this.newUser.confirmPassword) {
-      this.errorMessage = 'Por favor, completa todos los campos';
-      return;
-    }
-
-    // Validar que las contraseñas coincidan
-    if (this.newUser.password !== this.newUser.confirmPassword) {
-      this.errorMessage = 'Las contraseñas no coinciden';
-      return;
-    }
-
-    // Validar longitud mínima de contraseña
-    if (this.newUser.password.length < 8) {
-      this.errorMessage = 'La contraseña debe tener al menos 8 caracteres';
-      return;
-    }
-
-    // Validar formato de email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(this.newUser.email)) {
-      this.errorMessage = 'Por favor, ingresa un email válido';
-      return;
-    }
-
-    this.isLoading = true;
-
-    // Crear objeto para enviar al backend (SIN role - el backend lo asigna)
-    const userToRegister = {
-      name: this.newUser.name.trim(),
-      email: this.newUser.email.trim().toLowerCase(),
-      password: this.newUser.password
-      // 🔒 NOTA: No enviamos 'role' - el backend siempre asigna 'user'
-    };
-
-    this.userservice.createUser(userToRegister).subscribe({
-      next: (response) => {
-        this.isLoading = false;
-        this.successMessage = '¡Usuario registrado exitosamente!';
-        this.errorMessage = null;
-        
-        // Limpiar el formulario
-        this.newUser = {
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: ''
-        };
-
-        // Cambiar al modo login después de 2 segundos
-        setTimeout(() => {
-          this.isRegister = false;
-          this.successMessage = null;
-          // Prellenar el email para facilitar el login
-          this.email = userToRegister.email;
-        }, 2000);
-      },
-      error: (error) => {
-        this.isLoading = false;
-        console.error('Error en registro:', error);
-        
-        // Manejar diferentes tipos de errores
-        if (error.status === 422) {
-          // Errores de validación del backend
-          if (error.error?.errors?.email) {
-            this.errorMessage = 'Este email ya está registrado. Por favor, usa otro.';
-          } else if (error.error?.errors?.name) {
-            this.errorMessage = 'El nombre no es válido.';
-          } else {
-            this.errorMessage = 'Datos inválidos. Verifica la información.';
-          }
-        } else if (error.status === 409) {
-          this.errorMessage = 'Este email ya está registrado. Por favor, inicia sesión.';
-        } else {
-          this.errorMessage = 'Error al registrar usuario. Intenta nuevamente.';
-        }
-      }
-    });
+  // Validar que todos los campos estén completos
+  if (!this.newUser.name || !this.newUser.email || !this.newUser.password || !this.newUser.confirmPassword) {
+    this.errorMessage = 'Por favor, completa todos los campos';
+    return;
   }
+
+  // Validar que las contraseñas coincidan
+  if (this.newUser.password !== this.newUser.confirmPassword) {
+    this.errorMessage = 'Las contraseñas no coinciden';
+    return;
+  }
+
+  // Validar longitud mínima de contraseña
+  if (this.newUser.password.length < 8) {
+    this.errorMessage = 'La contraseña debe tener al menos 8 caracteres';
+    return;
+  }
+
+  // Validar formato de email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(this.newUser.email)) {
+    this.errorMessage = 'Por favor, ingresa un email válido';
+    return;
+  }
+
+  this.isLoading = true;
+
+  // ✅ Agregar role al objeto newUser
+  this.newUser.role = 'user';
+
+  this.userservice.createUser(this.newUser).subscribe({
+    next: (response) => {
+      this.isLoading = false;
+      this.successMessage = '¡Usuario registrado exitosamente!';
+      this.errorMessage = null;
+      
+      // Limpiar el formulario
+      this.newUser = {
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        role: '' // Resetear role también
+      };
+
+      // Cambiar al modo login después de 2 segundos
+      setTimeout(() => {
+        this.isRegister = false;
+        this.successMessage = null;
+        this.email = this.newUser.email;
+      }, 2000);
+    },
+    error: (error) => {
+      this.isLoading = false;
+      console.error('Error en registro:', error);
+      
+      if (error.status === 422) {
+        if (error.error?.errors?.email) {
+          this.errorMessage = 'Este email ya está registrado. Por favor, usa otro.';
+        } else if (error.error?.errors?.name) {
+          this.errorMessage = 'El nombre no es válido.';
+        } else {
+          this.errorMessage = 'Datos inválidos. Verifica la información.';
+        }
+      } else if (error.status === 409) {
+        this.errorMessage = 'Este email ya está registrado. Por favor, inicia sesión.';
+      } else {
+        this.errorMessage = 'Error al registrar usuario. Intenta nuevamente.';
+      }
+    }
+  });
+}
 
   /**
    * Alternar entre formularios de login y registro
@@ -196,7 +187,8 @@ export class LoginComponent {
       name: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      role: 'user'
     };
   }
 }
