@@ -1,55 +1,205 @@
-section {
-  background:
-  linear-gradient(rgba(13,15,20,.85), rgba(13,15,20,.95)),
-  url('/imgs/gym-banner.jpg');
-
+/* ===== HERO SECTION ===== */
+.hero {
+  position: relative;
+  min-height: 85vh;
+  background: linear-gradient(rgba(13, 15, 20, 0.85), rgba(13, 15, 20, 0.95)), 
+              url('/imgs/gym-banner.jpg');
   background-size: cover;
   background-position: center;
-  min-height: 65vh;
+  overflow: hidden;
+  padding: 40px 20px;
 }
 
-/* 📱 Media query para pantallas medianas (<=1080px) */
-@media (max-width: 1080px) {
-  .carousel-item {
-    height: 85vh;
-  }
+/* Overlay con gradiente */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, 
+    rgba(47, 128, 237, 0.1) 0%, 
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
-/* 📱 Media query para pantallas pequeñas (<=720px) */
-@media (max-width: 720px) {
-  .carousel-item {
-    height: 65vh;
-  }
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
 }
 
-/* Imagen móvil con fondo oscuro */
-.mobile-banner {
-  background-color: #1A1A1A;
-  height: 50vh; /* Igual que el carrusel en móviles */
-  display: none;
+/* ===== TÍTULO ===== */
+.hero h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #F2C94C, #2F80ED);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+
+
+/* Botón Primario - CATÁLOGO */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #F2C94C, #2F80ED);
+  color: white;
+  padding: 14px 35px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 25px rgba(47, 128, 237, 0.35);
   position: relative;
   overflow: hidden;
 }
 
-/* Imagen ajustada al centro, pero más abajo */
-.mobile-image {
-  position: absolute;
-  top: 60%; /* Un poco más abajo del centro */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: auto;
-  max-height: 100%;
-  object-fit: contain;
+
+.btn-primary:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 40px rgba(47, 128, 237, 0.5);
+  color: white;
 }
 
-/* Mostrar imagen en móvil */
-@media (max-width: 720px) {
-  .mobile-banner {
-    display: block;
-  }
+.btn-primary:hover::before {
+  left: 100%;
+}
 
-  .desktop-carousel {
+.btn-primary .btn-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.btn-primary:hover .btn-arrow {
+  transform: translateX(5px);
+}
+
+/* Desktop */
+@media (max-width: 1080px) {
+  .hero {
+    min-height: 85vh;
+  }
+  
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 75vh;
+    padding: 30px 15px;
+  }
+  
+  .hero h1 {
+    font-size: 2.8rem;
+  }
+  
+  .hero .lead {
+    font-size: 1.1rem;
+    padding: 0 15px;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 25px;
+    font-size: 1rem;
+  }
+  
+  .hero-stats {
+    gap: 25px;
+    flex-wrap: wrap;
+  }
+  
+  .stat-number {
+    font-size: 1.3rem;
+  }
+}
+
+/* Móvil Grande */
+@media (max-width: 576px) {
+  .hero {
+    min-height: 70vh;
+    padding: 20px 10px;
+  }
+  
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  
+  .hero .lead {
+    font-size: 1rem;
+  }
+  
+  .badge-pulse {
+    font-size: 0.75rem;
+    padding: 6px 18px;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+  
+  .hero-stats {
+    gap: 15px;
+    flex-wrap: wrap;
+    padding-top: 20px;
+  }
+  
+  .stat-number {
+    font-size: 1.1rem;
+  }
+  
+  .stat-label {
+    font-size: 0.75rem;
+  }
+  
+  .stat-divider {
     display: none;
+  }
+}
+
+/* Móvil Pequeño */
+@media (max-width: 400px) {
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  
+  .hero .lead {
+    font-size: 0.9rem;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    font-size: 0.85rem;
+    padding: 10px 16px;
   }
 }
