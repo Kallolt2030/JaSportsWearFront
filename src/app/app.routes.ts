@@ -17,6 +17,7 @@ import { NewUserComponent } from './component/admin/new-user/new-user.component'
 import { NewPostComponent } from './component/admin/new-post/new-post.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ListPostComponent } from './component/admin/list-post/list-post.component';
+import { CarritoComponent } from './component/public/carrito/carrito.component';
 
 export const routes: Routes = [
   {
@@ -27,7 +28,8 @@ export const routes: Routes = [
       { path: 'post', component: PostComponent },
       { path: 'catalog', component: CatalogComponent },
       { path: 'product/:id', component: ProductComponent },
-      { path: 'login', component: LoginComponent }
+      { path: 'login', component: LoginComponent },
+      {path: 'cart', component: CarritoComponent} // Ruta para el registro de usuarios
     ]
   },
   {
