@@ -1,1 +1,139 @@
-<p>carrito works!</p>
+<section class="mt-4 pt-5">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-8">
+
+        <div class="p-4 bg-light rounded shadow">
+
+          <h2 class="mb-4">
+            🛒 Mi carrito
+          </h2>
+
+          <div *ngIf="productos.length === 0" class="text-center py-5">
+            <h4>No hay productos en el carrito</h4>
+          </div>
+
+          <div
+            class="card mb-3"
+            *ngFor="let producto of productos">
+
+            <div class="row g-0 align-items-center">
+
+              <div class="col-md-3 text-center p-3">
+
+                <img
+                  [src]="producto.image"
+                  class="img-fluid rounded producto-img">
+
+              </div>
+
+              <div class="col-md-9">
+
+                <div class="card-body">
+
+                  <h5>
+                    {{ producto.name }}
+                  </h5>
+
+                  <p class="mb-2 text-muted">
+                    Precio:
+                    {{ producto.price | currency }}
+                  </p>
+
+                  <div class="d-flex align-items-center gap-2 mb-3">
+
+                    <button
+                      class="btn btn-outline-danger btn-sm"
+                      (click)="carritoService.disminuirCantidad(producto.id)">
+                      -
+                    </button>
+
+                    <span class="fw-bold">
+                      {{ producto.quantity }}
+                    </span>
+
+                    <button
+                      class="btn btn-outline-success btn-sm"
+                      (click)="carritoService.aumentarCantidad(producto.id)">
+                      +
+                    </button>
+
+                  </div>
+
+                  <p class="fw-bold mb-3">
+                    Subtotal:
+                    {{ producto.price * producto.quantity | currency }}
+                  </p>
+
+                  <button
+                    class="btn btn-danger btn-sm"
+                    (click)="carritoService.eliminarProducto(producto.id)">
+                    Eliminar
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-4">
+
+        <div class="bg-light rounded shadow p-4 resumen">
+
+          <h3 class="mb-4">
+            Resumen
+          </h3>
+
+          <div class="d-flex justify-content-between mb-2">
+            <span>Productos</span>
+            <span>
+              {{ carritoService.getCantidadProductos() }}
+            </span>
+          </div>
+
+          <div class="d-flex justify-content-between mb-2">
+            <span>Envío</span>
+            <span>Gratis</span>
+          </div>
+
+          <hr>
+
+          <div class="d-flex justify-content-between fw-bold mb-4">
+
+            <span>Total</span>
+
+            <span>
+              {{ carritoService.getTotal() | currency }}
+            </span>
+
+          </div>
+
+          <button
+            class="btn btn-danger w-100 mb-2"
+            (click)="carritoService.vaciarCarrito()">
+
+            Vaciar carrito
+
+          </button>
+
+          <button
+            class="btn btn-success w-100">
+
+            Finalizar compra
+
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

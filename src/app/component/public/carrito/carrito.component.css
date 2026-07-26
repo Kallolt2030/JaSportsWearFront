@@ -1,0 +1,33 @@
+.producto-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+}
+
+.resumen {
+  position: sticky;
+  top: 100px;
+}
+
+.btn {
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+
+  .producto-img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .resumen {
+    position: static;
+    margin-top: 20px;
+  }
+
+}
