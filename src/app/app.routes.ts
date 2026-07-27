@@ -18,6 +18,8 @@ import { NewPostComponent } from './component/admin/new-post/new-post.component'
 import { AuthGuard } from './guards/auth.guard';
 import { ListPostComponent } from './component/admin/list-post/list-post.component';
 import { CarritoComponent } from './component/public/carrito/carrito.component';
+import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {
@@ -29,7 +31,10 @@ export const routes: Routes = [
       { path: 'catalog', component: CatalogComponent },
       { path: 'product/:id', component: ProductComponent },
       { path: 'login', component: LoginComponent },
-      {path: 'cart', component: CarritoComponent} // Ruta para el registro de usuarios
+      { path: 'cart', component: CarritoComponent},
+      { path: 'reset-password',component: ResetPasswordComponent},
+      { path: 'forgot-password', component: ForgotPasswordComponent } // Asegúrate de tener este componente creado
+       
     ]
   },
   {
