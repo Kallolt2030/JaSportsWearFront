@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -10,8 +10,14 @@ export class CartService {
 
   private apiUrl = `${environment.apiUrl}/cart`;
   private storageKey = 'cart';
+  private headers = new HttpHeaders({
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+  });
+
+  
 
   constructor(private http: HttpClient) { }
+  
 
   // ==========================
   // API LARAVEL
@@ -39,9 +45,10 @@ export class CartService {
   }
 
   syncCart(items: any[]): Observable<any> {
+    
     return this.http.post(`${this.apiUrl}/sync`, {
       items
-    });
+    }, { headers: this.headers });
   }
 
   // ==========================

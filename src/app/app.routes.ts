@@ -20,6 +20,7 @@ import { ListPostComponent } from './component/admin/list-post/list-post.compone
 import { CarritoComponent } from './component/public/carrito/carrito.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
+import { MisComprasComponent } from './pages/user/mis-compras/mis-compras.component';
 
 export const routes: Routes = [
   {
@@ -33,7 +34,8 @@ export const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'cart', component: CarritoComponent},
       { path: 'reset-password',component: ResetPasswordComponent},
-      { path: 'forgot-password', component: ForgotPasswordComponent } // Asegúrate de tener este componente creado
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'orders', component: MisComprasComponent } // Asegúrate de tener este componente creado
        
     ]
   },

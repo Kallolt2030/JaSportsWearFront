@@ -1,0 +1,41 @@
+<h2>Mis compras</h2>
+
+<div *ngIf="orders.length === 0" class="empty-history">
+  <p>No hay historial de compras</p>
+</div>
+
+
+<div *ngIf="orders.length > 0">
+
+  <div *ngFor="let order of orders" class="order">
+
+    <h3>Pedido #{{ order.id }}</h3>
+
+    <p>
+      <strong>Estado:</strong> {{ order.status }}
+    </p>
+
+    <p>
+      <strong>Total:</strong> ${{ order.total }}
+    </p>
+
+
+    <div *ngFor="let item of order.items" class="order-item">
+
+      <img 
+        [src]="item.product.image"
+        width="80"
+        alt="Imagen de {{ item.product.name }}"
+      >
+
+      <span>{{ item.product.name }}</span>
+
+      <span>
+        Cantidad: {{ item.quantity }}
+      </span>
+
+    </div>
+
+  </div>
+
+</div>

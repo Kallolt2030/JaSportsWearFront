@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
-
-import { environment } from '../../../../environments/environment';
 import { UserService } from '../../../services/user.service';
+import { CartService } from '../../../services/cart.service';
+import { AuthService } from '../../../services/auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -48,7 +48,9 @@ export class LoginComponent {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private cartService: CartService,
+    private authService: AuthService
   ) { }
 
   //============================
@@ -83,9 +85,8 @@ export class LoginComponent {
 
     this.isLoading = true;
 
-    this.http.post<any>(`${environment.apiUrl}/login`, {
-      email: this.email,
-      password: this.password
+    this.authService.login({ 
+      email: this.email, password: this.password 
     }).subscribe({
 
       next: (response) => {
@@ -93,7 +94,27 @@ export class LoginComponent {
         this.isLoading = false;
 
         localStorage.setItem('token', response.token);
+        window.dispatchEvent(new Event('storage'));
         localStorage.setItem('userId', response.user.id);
+
+        const localCart = this.cartService.getLocalCart();
+
+          if (localCart.length > 0) {
+
+            this.cartService.syncCart(localCart).subscribe({
+
+              next: () => {
+                this.cartService.clearLocalCart();
+                console.log('Carrito sincronizado correctamente.');
+              },
+
+              error: (err) => {
+                console.error('Error al sincronizar el carrito', err);
+              }
+
+            });
+
+          }
 
         if (response.user.role === 'admin') {
 

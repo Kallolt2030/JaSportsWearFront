@@ -106,9 +106,10 @@
 
           <button
             class="btn btn-success w-100"
-            [disabled]="productos.length === 0">
+            [disabled]="productos.length === 0"
+            (click)="finalizarCompra()">
             Finalizar compra
-          </button>
+        </button>
 
         </div>
       </div>
