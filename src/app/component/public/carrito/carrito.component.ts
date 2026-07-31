@@ -1,29 +1,78 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CartService } from '../../../services/cart.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-carrito',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './carrito.component.html',
-  styleUrl: './carrito.component.css'
+  styleUrls: ['./carrito.component.css']
 })
-export class CarritoComponent {
-  // Datos de ejemplo para mostrar el diseño
-  productos: any[] = [
-    {
-      id: 1,
-      name: 'Producto de ejemplo 1',
-      price: 29.99,
-      quantity: 2,
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 2,
-      name: 'Producto de ejemplo 2',
-      price: 49.99,
-      quantity: 1,
-      image: 'https://via.placeholder.com/150'
+export class CarritoComponent implements OnInit {
+
+  productos: any[] = [];
+
+  constructor(private cartService: CartService) {}
+
+  ngOnInit(): void {
+    this.cargarCarrito();
+  }
+
+  cargarCarrito(): void {
+    this.productos = this.cartService.getLocalCart();
+  }
+
+  getTotal(): number {
+    return this.productos.reduce((total, producto) => {
+      return total + (producto.price * producto.quantity);
+    }, 0);
+  }
+
+  aumentarCantidad(producto: any): void {
+    producto.quantity++;
+
+    this.cartService.updateLocalQuantity(
+      producto.id,
+      producto.quantity
+    );
+
+    this.cargarCarrito();
+  }
+
+  disminuirCantidad(producto: any): void {
+
+    if (producto.quantity > 1) {
+
+      producto.quantity--;
+
+      this.cartService.updateLocalQuantity(
+        producto.id,
+        producto.quantity
+      );
+
+    } else {
+
+      this.cartService.removeLocalProduct(producto.id);
+
     }
-  ];
+
+    this.cargarCarrito();
+  }
+
+  eliminarProducto(id: number): void {
+
+    this.cartService.removeLocalProduct(id);
+
+    this.cargarCarrito();
+
+  }
+
+  vaciarCarrito(): void {
+
+    this.cartService.clearLocalCart();
+
+    this.cargarCarrito();
+
+  }
+
 }

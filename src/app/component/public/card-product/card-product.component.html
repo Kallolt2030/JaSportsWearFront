@@ -36,6 +36,14 @@
             <span class="badge text-bg-success">{{ product.price | currency }}</span>
           </p>
         </div>
+        <!-- Botón agregar carrito -->
+        <button
+          class="btn btn-danger w-100"
+          (click)="agregarCarrito(product); $event.stopPropagation()">
+          <i class="bi bi-cart-plus"></i>
+          Agregar al carrito
+        </button>
+
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { CartService } from '../../../services/cart.service';
 import { ProductService } from '../../../services/product.service';
 import { RouterLink } from '@angular/router';
 
@@ -17,7 +17,7 @@ export class CardProductComponent {
   alertMessage: string = '';
   isLoading: boolean = true;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private cartService: CartService) {}
 
 ngOnInit() {
   this.productService.getImagesProducts().subscribe({
@@ -57,4 +57,18 @@ ngOnInit() {
       this.alertMessage = '';
     }
   }
+  agregarCarrito(product: any): void {
+
+  const productoCarrito = {
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    image: product.image_urls?.[0] || '/imgs/default.jpg'
+  };
+
+  this.cartService.addLocalProduct(productoCarrito);
+
+  alert('Producto agregado al carrito');
+
+}
 }
