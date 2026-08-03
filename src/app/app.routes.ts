@@ -35,7 +35,7 @@ export const routes: Routes = [
       { path: 'cart', component: CarritoComponent},
       { path: 'reset-password',component: ResetPasswordComponent},
       { path: 'forgot-password', component: ForgotPasswordComponent },
-      { path: 'orders', component: MisComprasComponent } // Asegúrate de tener este componente creado
+      { path: 'orders', component: MisComprasComponent } 
        
     ]
   },

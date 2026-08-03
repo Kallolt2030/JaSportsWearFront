@@ -1,38 +1,114 @@
-<h2>Mis compras</h2>
+<div class="container py-4">
 
-<div *ngIf="orders.length === 0" class="empty-history">
-  <p>No hay historial de compras</p>
-</div>
+  <h2 class="mb-4 text-center">
+    Mis compras
+  </h2>
+
+ <br>
 
 
-<div *ngIf="orders.length > 0">
+  <!-- Sin compras -->
+  <div 
+    *ngIf="orders.length === 0" 
+    class="alert alert-info text-center shadow-sm"
+    role="alert"
+  >
+    <h5 class="mb-2">
+      No hay historial de compras
+    </h5>
 
-  <div *ngFor="let order of orders" class="order">
-
-    <h3>Pedido #{{ order.id }}</h3>
-
-    <p>
-      <strong>Estado:</strong> {{ order.status }}
+    <p class="mb-0">
+      Aún no has realizado ninguna compra.
     </p>
-
-    <p>
-      <strong>Total:</strong> ${{ order.total }}
-    </p>
+  </div>
 
 
-    <div *ngFor="let item of order.items" class="order-item">
+  <!-- Lista de compras -->
+  <div 
+    *ngIf="orders.length > 0"
+    class="row g-4"
+  >
 
-      <img 
-        [src]="item.product.image"
-        width="80"
-        alt="Imagen de {{ item.product.name }}"
-      >
+    <div 
+      *ngFor="let order of orders"
+      class="col-12"
+    >
 
-      <span>{{ item.product.name }}</span>
+      <div class="card shadow-sm">
 
-      <span>
-        Cantidad: {{ item.quantity }}
-      </span>
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+          <h5 class="mb-0">
+            Pedido #{{ order.id }}
+          </h5>
+
+          <span 
+            class="badge bg-primary"
+          >
+            {{ order.status }}
+          </span>
+
+        </div>
+
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between mb-3">
+
+            <span>
+              <strong>Total:</strong>
+              ${{ order.total }}
+            </span>
+
+            <span class="text-muted">
+              {{ order.created_at | date:'dd/MM/yyyy' }}
+            </span>
+
+          </div>
+
+
+          <h6>
+            Productos:
+          </h6>
+
+
+          <div 
+            *ngFor="let item of order.items"
+            class="d-flex align-items-center border rounded p-2 mb-2"
+          >
+
+            <img
+              [src]="item.product.image"
+              class="rounded me-3"
+              width="70"
+              height="70"
+              alt="Imagen de {{ item.product.name }}"
+            >
+
+
+            <div>
+
+              <h6 class="mb-1">
+                {{ item.product.name }}
+              </h6>
+
+              <small class="text-muted">
+                Cantidad: {{ item.quantity }}
+              </small>
+
+              <br>
+
+              <small class="text-muted">
+                Precio: ${{ item.price }}
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
 
     </div>
 
